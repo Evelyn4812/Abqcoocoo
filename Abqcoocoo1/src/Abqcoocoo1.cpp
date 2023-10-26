@@ -8,7 +8,7 @@
 
 // Include Particle Device OS APIs
 #include "Particle.h"
-const int GREENLED = A5;
+const int GREENLED = D17;
 const int REDLED = D15;
 const int DELAYTIME = 1000;
 const int PHOTOPIN = A2;
@@ -32,21 +32,18 @@ void setup() {
 }
 
 void loop() {
+  digitalWrite (GREENLED,LOW);
+  digitalWrite (REDLED,LOW);
+  delay(2);
   photoValue=analogRead(PHOTOPIN);
-  ledValue = photoValue / 18;
-  analogWrite(GREENLED,ledValue);
-  analogWrite(REDLED,ledValue);
-  if(photoValue > 100){
-    doorOpen = true;
-  Serial.printf("%i,%i\n",photoValue,ledValue);
-
+  if(photoValue>5){
+      digitalWrite(GREENLED,HIGH);
+      digitalWrite(REDLED,HIGH);
   }
-}
-
-  // The core of your code will likely live here.
-
-  // Example: Publish event to cloud every 10 seconds. Uncomment the next 3 lines to try it!
-  // Log.info("Sending Hello World to the cloud!");
-  // Particle.publish("Hello world!");
-  // delay( 10 * 1000 ); // milliseconds and blocking - see docs for more info!
-
+  else{
+    digitalWrite (GREENLED,LOW);
+    digitalWrite (REDLED,LOW);
+  }
+  Serial.printf("%i,%i\n",photoValue,ledValue);
+  
+  }
