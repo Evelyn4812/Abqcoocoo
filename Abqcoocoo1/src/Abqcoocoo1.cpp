@@ -8,8 +8,8 @@
 
 // Include Particle Device OS APIs
 #include "Particle.h"
-const int GREENLED = D9;
-const int REDLED = D2
+const int GREENLED = A5;
+const int REDLED = D15;
 const int DELAYTIME = 1000;
 const int PHOTOPIN = A2;
 bool doorOpen;
@@ -28,17 +28,18 @@ void setup() {
   Serial.begin(9600);
   pinMode(REDLED,OUTPUT);
   pinMode(GREENLED,OUTPUT);
+  pinMode(PHOTOPIN,INPUT);
 }
 
 void loop() {
   photoValue=analogRead(PHOTOPIN);
-  ledValue = photoValue / 16;
+  ledValue = photoValue / 18;
   analogWrite(GREENLED,ledValue);
   analogWrite(REDLED,ledValue);
   if(photoValue > 100){
     doorOpen = true;
-  Serial.printf("%i,\n",photoValue,ledValue);
-   
+  Serial.printf("%i,%i\n",photoValue,ledValue);
+
   }
 }
 
@@ -48,4 +49,4 @@ void loop() {
   // Log.info("Sending Hello World to the cloud!");
   // Particle.publish("Hello world!");
   // delay( 10 * 1000 ); // milliseconds and blocking - see docs for more info!
-}
+
