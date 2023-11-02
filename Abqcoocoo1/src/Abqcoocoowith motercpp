@@ -10,13 +10,13 @@
 #include <Particle.h>
 #include <Stepper.h>
 const int GREENLED = D17;
-const int REDLED = D19;
+const int REDLED = D14;
 const int DELAYTIME = 1000;
 const int PHOTOPIN = A2;
 const int SPR = 2048; // 28BY}--48 2048 steps per revolution;
 const int MOTORSPEED = 10;
 // IN1, IN3, IN2, IN4
-Stepper myStepper(SPR, D8, D9, D16, D15);
+Stepper myStepper(SPR, D8, D16, D9, D15);
 
 /* Pin Connections
 IN1 on Stepper goes to D8
@@ -65,9 +65,6 @@ void loop() {
   }
   Serial.printf("%i,%i\n",photoValue,ledValue);
 
-    myStepper.step(2000);
-    //delay (2000);
-    
-    myStepper.step(-2000);
-    //delay(2000);
+    myStepper.step(4096);
+    myStepper.step(-2048);
 }
