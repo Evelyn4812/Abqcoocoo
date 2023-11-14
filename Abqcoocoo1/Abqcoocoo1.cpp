@@ -18,13 +18,13 @@ const int MOTORSPEED = 10;
 const int RELAYPIN = D18;
 
 // IN1, IN3, IN2, IN4
-Stepper myStepperslide (SPR, D6, D19, D16, D15);
+Stepper myStepperslide (SPR, D0, D1, D15, D16);
 Stepper myStepperdoor(SPR, D2, D4, D3, D5);
 /* Pin Connections
-IN1 on Stepperslide goes to D6
-IN2 on Stepperslide goes to D16
-IN3 on Stepperslide goes to D19
-IN4 on Stepperslide goes to D15
+IN1 on Stepperslide goes to D0
+IN2 on Stepperslide goes to D15
+IN3 on Stepperslide goes to D1
+IN4 on Stepperslide goes to D16
 "_" on Stepperslide  goes to GND
 "+" on Stepperslide goes to VUSB (this needs 5V)
 */
@@ -70,18 +70,18 @@ void loop() {
   }
   Serial.printf("%i,%i\n",photoValue,ledValue);
   digitalWrite(RELAYPIN,HIGH);
-    myStepperslide.step(2000);
+    myStepperslide.step(-1500);
    digitalWrite(RELAYPIN,LOW);
     
 
-    //delay (2000);
-    myStepperdoor.step(8000);
+    //delay (1000);
+    myStepperdoor.step(7800);
 
     //delay(3000);
     digitalWrite(RELAYPIN,HIGH);
-    myStepperslide.step(-2000);
+    myStepperslide.step(1500);
      digitalWrite(RELAYPIN,LOW);
-    //delay(2000);
-    myStepperdoor.step(-8000);
+    //delay(1000);
+    myStepperdoor.step(-7800);
     //delay(3000);
 }
