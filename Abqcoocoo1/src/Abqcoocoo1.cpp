@@ -18,7 +18,7 @@ const int MOTORSPEED = 10;
 const int RELAYPIN = D18;
 
 // IN1, IN3, IN2, IN4
-Stepper myStepperslide (SPR, D6, D19, D16, D15);
+Stepper myStepperslide(SPR, D0, D1, D16, D15);
 Stepper myStepperdoor(SPR, D2, D4, D3, D5);
 /* Pin Connections
 IN1 on Stepperslide goes to D6
@@ -29,12 +29,11 @@ IN4 on Stepperslide goes to D15
 "+" on Stepperslide goes to VUSB (this needs 5V)
 */
 
-
 bool doorOpen;
 int ledValue, photoValue;
 float volts;
 float intoVolts(int inputValue);
-    
+
 SYSTEM_MODE(SEMI_AUTOMATIC);
 
 // Run the application and system concurrently in separate threads
@@ -42,46 +41,42 @@ SYSTEM_THREAD(ENABLED);
 
 SerialLogHandler logHandler(LOG_LEVEL_INFO);
 
-void setup() {
+void setup()
+{
   myStepperslide.setSpeed(MOTORSPEED);
   myStepperdoor.setSpeed(MOTORSPEED);
   Serial.begin(9600);
-  pinMode(REDLED,OUTPUT);
-  pinMode(GREENLED,OUTPUT);
-  pinMode(PHOTOPIN,INPUT);
-  pinMode(RELAYPIN,OUTPUT);
-
+  pinMode(REDLED, OUTPUT);
+  pinMode(GREENLED, OUTPUT);
+  pinMode(PHOTOPIN, INPUT);
+  pinMode(RELAYPIN, OUTPUT);
 }
 
-  
-
-void loop() {
-  digitalWrite (GREENLED,LOW);
-  digitalWrite (REDLED,LOW);
+void loop()
+{
+  digitalWrite(GREENLED, LOW);
+  digitalWrite(REDLED, LOW);
   delay(2);
-  photoValue=analogRead(PHOTOPIN);
-  if(photoValue>5){
-      digitalWrite(GREENLED,HIGH);
-      digitalWrite(REDLED,HIGH);
+  photoValue = analogRead(PHOTOPIN);
+  if (photoValue > 5)
+  {
+    digitalWrite(GREENLED, HIGH);
+    digitalWrite(REDLED, HIGH);
   }
-  else{
-    digitalWrite (GREENLED,LOW);
-    digitalWrite (REDLED,LOW);
+  else
+  {
+
+    digitalWrite(GREENLED, LOW);
+    digitalWrite(REDLED, LOW);
   }
-  Serial.printf("%i,%i\n",photoValue,ledValue);
-  digitalWrite(RELAYPIN,HIGH);
-    myStepperslide.step(2000);
-   digitalWrite(RELAYPIN,LOW);
-    
+  Serial.printf("%i,%i\n", photoValue, ledValue);
 
-    //delay (2000);
-    myStepperdoor.step(8000);
-
-    //delay(3000);
-    digitalWrite(RELAYPIN,HIGH);
-    myStepperslide.step(-2000);
-     digitalWrite(RELAYPIN,LOW);
-    //delay(2000);
-    myStepperdoor.step(-8000);
-    //delay(3000);
+  myStepperdoor.step(14000);
+ delay (4000);
+  myStepperslide.step(1800);
+  delay (2000);
+  myStepperslide.step(-1800);
+ delay(3000);
+  myStepperdoor.step(-14000);
+ delay (5000);
 }
