@@ -16,10 +16,12 @@ const int PHOTOPIN = A2;
 const int SPR = 2048; // 28BY}--48 2048 steps per revolution;
 const int MOTORSPEED = 10;
 const int RELAYPIN = D18;
-
+const int MAGNETSENSOR = D6;
 // IN1, IN3, IN2, IN4
+bool magnitized;
 Stepper myStepperslide(SPR, D0, D1, D16, D15);
 Stepper myStepperdoor(SPR, D2, D4, D3, D5);
+void doorClosed();
 /* Pin Connections
 IN1 on Stepperslide goes to D6
 IN2 on Stepperslide goes to D16
@@ -50,6 +52,8 @@ void setup()
   pinMode(GREENLED, OUTPUT);
   pinMode(PHOTOPIN, INPUT);
   pinMode(RELAYPIN, OUTPUT);
+  pinMode (MAGNETSENSOR, INPUT);
+  doorClosed();
 }
 
 void loop()
@@ -71,12 +75,22 @@ void loop()
   }
   Serial.printf("%i,%i\n", photoValue, ledValue);
 
-  myStepperdoor.step(14000);
+  myStepperdoor.step(8500);
  delay (4000);
-  myStepperslide.step(1800);
-  delay (2000);
   myStepperslide.step(-1800);
- delay(3000);
-  myStepperdoor.step(-14000);
- delay (5000);
+  delay (4000);
+  myStepperslide.step(13000);
+ delay(1000);
+doorClosed(); 
+magnitized = digitalRead(MAGNETSENSOR);
+Serial.printf("%i\n",magnitized);
+
+
+ }
+ void doorClosed(){
+  while (digitalRead(MAGNETSENSOR)==1){
+    myStepperdoor.step(-50);
+  }
+   myStepperdoor.step(-175);
+  delay (5000);
 }
