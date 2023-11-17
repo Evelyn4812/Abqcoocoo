@@ -75,12 +75,12 @@ void loop()
   }
   Serial.printf("%i,%i\n", photoValue, ledValue);
 
-  myStepperdoor.step(8500);
- delay (4000);
+  myStepperdoor.step(10500);
+ delay (5000);
   myStepperslide.step(-1800);
-  delay (4000);
-  myStepperslide.step(13000);
- delay(1000);
+  delay (5000);
+  myStepperslide.step(1300);
+ delay(3000);
 doorClosed(); 
 magnitized = digitalRead(MAGNETSENSOR);
 Serial.printf("%i\n",magnitized);
@@ -91,6 +91,6 @@ Serial.printf("%i\n",magnitized);
   while (digitalRead(MAGNETSENSOR)==1){
     myStepperdoor.step(-50);
   }
-   myStepperdoor.step(-175);
-  delay (5000);
+   myStepperdoor.step(-200);
+  delay (8000);
 }
