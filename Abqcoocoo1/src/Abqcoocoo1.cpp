@@ -42,7 +42,7 @@ const int DIO = D9;
 
 TM1637 tm1637(CLK,DIO);
 
-SYSTEM_MODE(AUTOMATIC);
+SYSTEM_MODE(SEMI_AUTOMATIC);
 
 // Run the application and system concurrently in separate threads
 SYSTEM_THREAD(ENABLED);
@@ -89,24 +89,30 @@ void loop()
   }
   Serial.printf("%i,%i\n", photoValue, ledValue);
 delay (500);
-  myStepperdoor.step(10250);
+  Serial.printf("open door n");
+  myStepperdoor.step(11300);
  delay (5000);
+ Serial.printf("slide out\n");
   myStepperslide.step(-1900);
   delay (5000);
+  Serial.printf("slide in\n");
   myStepperslide.step(1900);
- delay(3000);
+ delay (3000);
+ //myStepperdoor.step(-11100);
 doorClosed(); 
 magnitized = digitalRead(MAGNETSENSOR);
 Serial.printf("magnetized %i\n",magnitized);
+delay(5000);
 
 
  }
  void doorClosed(){
+  Serial.printf("closing door\n");
   while (digitalRead(MAGNETSENSOR)==1){
     myStepperdoor.step(-50);
   }
-   myStepperdoor.step(-200);
-  delay (8000);
+   myStepperdoor.step(-50);
+  //delay (8000);
   
 } 
 
